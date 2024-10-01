@@ -26,6 +26,14 @@
                 <label for="idKostenProSeiteSmart">Kosten pro Seite Smart Print:</label>
                 <input id="idKostenProSeiteSmart" class="form-control" type="text" value="0.08" placeholder="in €">
             </div>
+            <div class="form-group">
+                <label for="idAnschaffungspreisExtended">Anschaffungspreis Drucker Extended:</label>
+                <input id="idAnschaffungspreisExtended" class="form-control" type="text" value="250" placeholder="in €">
+            </div>
+            <div class="form-group">
+                <label for="idKostenProSeiteExtended">Kosten pro Seite Drucker Extended:</label>
+                <input id="idKostenProSeiteExtended" class="form-control" type="text" value="0.07" placeholder="in €">
+            </div>
             <button type="button" class="btn btn-primary" onclick="fDruck();">Kalkuliere!</button>
         </form>
         <div class="mt-4" id="idAusgabe"></div>
@@ -43,10 +51,13 @@
     // Variablen deklarieren (4 Punkte)
     var vAnschaffungsPreisEco;
     var vAnschaffungsPreisSmart;
+    var vAnschaffungsPreisExtended;
     var vGesamtkostenEco;
     var vGesamtkostenSmart;
+    var vGesamtkostenExtended;
     var vKostenProSeiteEco;
     var vKostenProSeiteSmart;
+    var vKostenProSeiteExtended;
     var vAusgabeHTML = "";
     var vStart = 1000;
     var vXK; //kritische Menge
@@ -59,11 +70,14 @@
    vKostenProSeiteEco = parseFloat(document.getElementById("idKostenProSeiteEco").value);
    vAnschaffungsPreisSmart = parseFloat(document.getElementById("idAnschaffungspreisSmart").value);
    vKostenProSeiteSmart = parseFloat(document.getElementById("idKostenProSeiteSmart").value);
+   vAnschaffungsPreisExtended = parseFloat(document.getElementById("idAnschaffungspreisExtended").value);
+   vKostenProSeiteExtended = parseFloat(document.getElementById("idKostenProSeiteExtended").value);
    
 vAusgabeHTML = vAusgabeHTML + "<table class='table table-striped table-bordered'>";
 vAusgabeHTML = vAusgabeHTML + "<thead class='thead-dark'><tr><th>Seitenzahl</th>";
 vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Eco</th>";
 vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Smart</th>";
+vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Extended</th>";
 vAusgabeHTML = vAusgabeHTML + "<th>Bemerkung</th></tr></thead><tbody>";
 
 
@@ -74,15 +88,15 @@ while (vStart<=10000) {
 
 vGesamtkostenEco = (vStart * vKostenProSeiteEco) + vAnschaffungsPreisEco;
 vGesamtkostenSmart = (vStart * vKostenProSeiteSmart) + vAnschaffungsPreisSmart;
+vGesamtkostenExtended = (vStart * vKostenProSeiteExtended) + vAnschaffungsPreisExtended;
+
 
 if (vGesamtkostenEco>vGesamtkostenSmart) {
-vAusgabeHTML = vAusgabeHTML + "<tr><td>" + vStart + "</td><td>" + vGesamtkostenEco + "</td><td>" + vGesamtkostenSmart + "</td><td>Smart ist günstiger!</td></tr>";
+vAusgabeHTML = vAusgabeHTML + "<tr><td>" + vStart + "</td><td>" + vGesamtkostenEco + "</td><td>" + vGesamtkostenSmart + "</td><td>" + vGesamtkostenExtended + "</td><td>Smart ist günstiger!</td></tr>";
 } else if (vGesamtkostenEco<vGesamtkostenSmart) {
-vAusgabeHTML = vAusgabeHTML + "<tr><td>" + vStart + "</td><td>" + vGesamtkostenEco + "</td><td>" + vGesamtkostenSmart + "</td><td>Eco ist günstiger!</td></tr>";
+vAusgabeHTML = vAusgabeHTML + "<tr><td>" + vStart + "</td><td>" + vGesamtkostenEco + "</td><td>" + vGesamtkostenSmart + "</td><td>" + vGesamtkostenExtended + "</td><td>Eco ist günstiger!</td></tr>";
 } else {
-vAusgabeHTML = vAusgabeHTML + "<tr style = 'background-color: pink; color: white';><td>" + vStart + "</td><td>" + vGesamtkostenEco + "</td><td>" + vGesamtkostenSmart + "</td><td>kritische Menge!</td></tr>"; 
-}
-
+vAusgabeHTML = vAusgabeHTML + "<tr style = 'background-color: pink; color: white';><td>" + vStart + "</td><td>" + vGesamtkostenEco + "</td><td>" + vGesamtkostenSmart +  "</td><td>" + vGesamtkostenExtended + "</td><td>kritische Menge!</td></tr>"; 
 vStart = vStart + 1000;
 }
 
